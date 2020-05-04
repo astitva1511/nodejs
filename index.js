@@ -8,7 +8,7 @@ const debug = require('debug')('app:startup');
  //process.env['DEBUG'] = 'app:startup';
  debug('connecting to database...');
  app.set('view engine','pug');
- app.set('views','./views');
+ 
 //console.log(process.env.NODE_ENV);
 // console.log(app.get('env'));
 
@@ -17,7 +17,7 @@ const debug = require('debug')('app:startup');
 
 
 const genres = [
-  { id: 1, name: 'Action' },  
+  { id: 1, name: 'Action' }, 
   { id: 2, name: 'Horror' },  
   { id: 3, name: 'Romance' },  
 ];
