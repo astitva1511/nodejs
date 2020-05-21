@@ -1,5 +1,6 @@
+const config = require('config');
+const auth = require('./routes/auth');
 const mongoose = require('mongoose');
-const config =  require('config');
 const customers = require('./routes/customers');
 const express = require('express');
 const app = express();
@@ -8,7 +9,13 @@ const rentals = require('./routes/rentals');
 const movies = require('./routes/movies');
 const home = require('./routes/home');
 const Joi =require('joi');
+const users = require('./routes/users');
 Joi.objectId=require('joi-objectid')(Joi);
+
+if(!config.get('jwtPrivateKey')){
+    console.error('FATAL ERROR: jwtPrivateKey is not defined');
+    process.exit(1);
+}
 
 mongoose.connect('mongodb://localhost/vidly',{
     useNewUrlParser: true,
@@ -17,6 +24,7 @@ mongoose.connect('mongodb://localhost/vidly',{
 .then(()=>console.log('connected to MongoDb'))
 .catch(err => console.error('Could not connect to MongoDb'));
 
+
 app.use(express.json ());
  //process.env['DEBUG'] = 'app:startup';
 app.use('/',home);
@@ -24,6 +32,8 @@ app.use('/api/customers',customers);
 app.use('/api/genres',genres);
 app.use('/api/movies',movies);
 app.use('/api/rentals',rentals);
+app.use('/api/users',users);
+app.use('/api/auth',auth);
 //console.log(process.env.NODE_ENV);
 // console.log(app.get('env'));
 
